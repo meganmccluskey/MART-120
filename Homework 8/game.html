@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For Loops</title>
+
+    <script>
+        var actualAnswer;
+        var number1;
+        var number2;
+
+        var correct = 0;
+        var incorrect = 0;
+        var questionCount = 0;
+        var totalQuestions = 10;
+
+        function printQuestion() {
+            number1 = Math.floor(Math.random() * 10);
+            number2 = Math.floor(Math.random() * 10);
+
+            actualAnswer = number1 + number2;
+
+            document.getElementById("theQuestion").innerHTML =
+                "Question " + (questionCount + 1) +
+                " of " + totalQuestions +
+                ": What is " + number1 + " + " + number2 + "?";
+
+            document.getElementById("txtAnswer").value = "";
+            document.getElementById("txtAnswer").focus();
+        }
+
+        function checkAnswer() {
+            var answer = document.getElementById("txtAnswer").value;
+
+            // Make sure the player entered an answer
+            if (answer.trim() == "") {
+                document.getElementById("finalResult").innerHTML =
+                    "Please enter an answer.";
+                return;
+            }
+
+            // Check the player's answer
+            if (Number(answer) == actualAnswer) {
+                document.getElementById("finalResult").innerHTML =
+                    "Good job!";
+                correct++;
+            } else {
+                document.getElementById("finalResult").innerHTML =
+                    "Try Again! The correct answer was " + actualAnswer;
+                incorrect++;
+            }
+
+            questionCount++;
+
+            // Show final results after ten questions
+            if (questionCount == totalQuestions) {
+                document.getElementById("theQuestion").innerHTML =
+                    "Game Over!";
+
+                document.getElementById("txtAnswer").disabled = true;
+                document.getElementById("btnSubmit").disabled = true;
+
+                var percentage = (correct / totalQuestions) * 100;
+
+                document.getElementById("finalResult").innerHTML +=
+                    "<h2>Final Results</h2>" +
+                    "<p>Correct answers: " + correct + "</p>" +
+                    "<p>Incorrect answers: " + incorrect + "</p>" +
+                    "<p>Percentage correct: " + percentage + "%</p>";
+            } else {
+                printQuestion();
+            }
+        }
+
+        function runGame() {
+            for (var i = 1; i < 6; i++) {
+                document.getElementById("message").innerHTML +=
+                    "<h" + i + ">Welcome to our game!!!</h" + i + ">";
+            }
+
+            printQuestion();
+        }
+    </script>
+</head>
+
+<body onload="runGame();">
+
+    <nav>
+        <a href="homepage.html">Home</a>
+        <a href="secondpage.html">My Favorite Story</a>
+        <a href="thirdpage.html">Contact Us</a>
+        <a href="game.html">Math Game</a>
+    </nav>
+
+    <br>
+
+    <!-- Original game table -->
+    <table>
+        <tr>
+            <td colspan="2">
+                <div id="message"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <hr size="1">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div id="theQuestion"></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Your answer</td>
+            <td>
+                <input type="number" id="txtAnswer">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button id="btnSubmit" onclick="checkAnswer();">
+                    Submit
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <div id="finalResult"></div>
+
+</body>
+</html>
